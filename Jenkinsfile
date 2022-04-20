@@ -17,7 +17,7 @@ pipeline {
           sh 'docker version'
           sh 'docker build -t test .'
           sh 'docker run -dp 8080:8080 test'
-          sh 'sleep 30'
+          sh 'sleep 100'
         }
       }
     }
