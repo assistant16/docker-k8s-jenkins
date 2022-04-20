@@ -1,4 +1,7 @@
 pipeline {
+  environment {
+    dockerhub=credentials('dockerhub')
+  }
   agent {
     kubernetes {
       yamlFile 'docker-pod.yaml'  // path to the pod definition relative to the root of our project
@@ -14,10 +17,10 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         container('docker') {  
-          sh 'docker version'
-          sh 'docker build -t test .'
-          sh 'docker run -dp 8080:8080 test'
-          sh 'sleep 100'
+          sh 'docker build -t docker-k8s-jenkins .'
+          sh 'docker tag docker-k8s-jenkins assistant16/docker-k8s-jenkins:latest '
+          sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+          sh 'docker push assistant16/docker-k8s-jenkins:latest
         }
       }
     }
