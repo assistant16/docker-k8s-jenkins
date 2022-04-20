@@ -20,7 +20,7 @@ pipeline {
           sh 'docker build -t docker-k8s-jenkins .'
           sh 'docker tag docker-k8s-jenkins assistant16/docker-k8s-jenkins:latest '
           sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-          sh 'docker push assistant16/docker-k8s-jenkins:latest
+          sh 'docker push assistant16/docker-k8s-jenkins:latest'
         }
       }
     }
