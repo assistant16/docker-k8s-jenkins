@@ -6,10 +6,12 @@ pipeline {
       kubernetes {
       yamlFile 'docker-pod.yaml'  // path to the pod definition relative to the root of our project
      }
+    }
     steps {
         container('docker') {  
           sh 'docker version'
         }
+     }
     }
       stage('List NODES') {
         agent any
