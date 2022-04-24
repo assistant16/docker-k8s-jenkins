@@ -18,11 +18,17 @@ pipeline {
       steps {
         container('docker') {  
           sh 'docker build -t docker-k8s-jenkins .'
-          sh 'docker tag docker-k8s-jenkins assistant16/docker-k8s-jenkins:latest '
-          sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-          sh 'docker push assistant16/docker-k8s-jenkins:latest'
         }
       }
     }
+      stage('List NODES') {
+           steps {
+               withKubeConfig([credentialsId: 'secretfile']) {
+                sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
+                sh 'chmod u+x ./kubectl' 
+                sh 'kubectl get nodes'
+               }
+           }
+       }
   }
 }
