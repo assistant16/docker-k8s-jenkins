@@ -3,6 +3,7 @@ pipeline {
     dockerhub=credentials('dockerhub')
   }
   agent any
+  stages {
     stage('build Docker image') {
       agent {
         kubernetes {
