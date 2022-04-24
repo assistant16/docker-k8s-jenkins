@@ -9,3 +9,7 @@ spec:
     env:
       - name: DOCKER_TLS_CERTDIR
         value: ""
+  - name: kube
+    image: bitnami/kubectl:latest
+    securityContext:
+      privileged: true
