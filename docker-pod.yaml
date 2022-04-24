@@ -9,7 +9,3 @@ spec:
     env:
       - name: DOCKER_TLS_CERTDIR
         value: ""
-  - name: curl
-    image: curlimages/curl:latest
-    securityContext:
-      privileged: true
