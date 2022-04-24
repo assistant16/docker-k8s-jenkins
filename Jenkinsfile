@@ -21,8 +21,8 @@ pipeline {
            steps {
                withKubeConfig([credentialsId: 'secretfile']) {
                 sh 'kubectl get nodes'
-               }
-             }
+                 }
+                 }
       }
-    }
+   }
 }
