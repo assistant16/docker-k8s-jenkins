@@ -3,8 +3,7 @@ pipeline {
     dockerhub=credentials('dockerhub')
   }
   agent any
-  stages {
-    stage('Git clone and build') {
+    stage('build Docker image') {
       agent {
         kubernetes {
           yamlFile 'docker-pod.yaml'
@@ -12,8 +11,6 @@ pipeline {
       }
       steps {
         container('docker') {  
-          sh 'git clone https://github.com/assistant16/docker-k8s-jenkins.git'
-          sh 'cd docker-k8s-jenkins'
           sh 'docker build -t docker-k8s-jenkins .'
           sh 'docker tag docker-k8s-jenkins assistant16/docker-k8s-jenkins:latest '
           sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
