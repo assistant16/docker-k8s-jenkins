@@ -18,4 +18,5 @@ spec:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 6379 
+        - name: httpport-test
+          containerPort: 6379 
