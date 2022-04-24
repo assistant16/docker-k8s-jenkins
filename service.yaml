@@ -9,6 +9,6 @@ spec:
   type: NodePort  
   ports:
     - name: httpport-test
-      port: 30003 
+      port: 8080 
       targetPort: 30003 
       nodePort: 30003 
