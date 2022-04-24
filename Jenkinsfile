@@ -21,6 +21,7 @@ pipeline {
                 sh 'chmod u+x ./kubectl'  
                 sh './kubectl get nodes'
                 sh 'pwd'
+                sh 'docker version'
                }
           }
       }
