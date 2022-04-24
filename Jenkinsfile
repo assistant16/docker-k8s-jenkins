@@ -2,6 +2,7 @@ pipeline {
   environment {
     dockerhub=credentials('dockerhub')
   }
+  agent any
   stages {
     stage('Git clone and build') {
       agent {
