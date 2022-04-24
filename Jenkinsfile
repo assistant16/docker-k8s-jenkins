@@ -2,11 +2,7 @@ pipeline {
   environment {
     dockerhub=credentials('dockerhub')
   }
-  agent {
-    kubernetes {
-      yamlFile 'docker-pod.yaml'  // path to the pod definition relative to the root of our project
-    }
-  }
+  agent any
   stages {
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
@@ -23,7 +19,6 @@ pipeline {
     //}
       stage('List NODES') {
            steps {
-             container('kube') { 
                withKubeConfig([credentialsId: 'secretfile']) {
                 sh 'kubectl get nodes'
                }
