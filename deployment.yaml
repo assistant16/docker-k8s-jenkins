@@ -5,6 +5,12 @@ metadata:
   namespace: jenkins
 spec:
   replicas: 1
+  metadata:
+  name: test-app-deployment
+    spec:
+  selector:
+    matchLabels:
+      app: test-app
   template:
     metadata:
       labels:
