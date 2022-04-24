@@ -23,7 +23,7 @@ pipeline {
     //}
       stage('List NODES') {
            steps {
-             container('curl') { 
+             container('jnlp') { 
                withKubeConfig([credentialsId: 'secretfile']) {
                 sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
                 sh 'chmod u+x ./kubectl' 
