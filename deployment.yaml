@@ -22,4 +22,4 @@ spec:
             memory: 100Mi
         ports:
         - name: httpport-test
-          containerPort: 30003 
+          containerPort: 8080 
