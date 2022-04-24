@@ -1,29 +1,36 @@
 pipeline {
-  agent any
+  environment {
+    dockerhub=credentials('dockerhub')
+  }
   stages {
-    stage('Build') {
-     agent {
-      kubernetes {
-      yamlFile 'docker-pod.yaml'  // path to the pod definition relative to the root of our project
-     }
-    }
-    steps {
-        container('docker') {  
-          sh 'docker version'
+    stage('Git clone and build') {
+      agent {
+        kubernetes {
+          yamlFile 'docker-pod.yaml'
         }
-     }
+      }
+      steps {
+        container('docker') {  
+          sh 'git clone https://github.com/assistant16/docker-k8s-jenkins.git'
+          sh 'cd docker-k8s-jenkins'
+          sh 'docker build -t docker-k8s-jenkins .'
+          sh 'docker tag docker-k8s-jenkins assistant16/docker-k8s-jenkins:latest '
+          sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+          sh 'docker push assistant16/docker-k8s-jenkins:latest'
+        }
+      }
     }
-      stage('List NODES') {
-        agent any
-           steps {
-               withKubeConfig([credentialsId: 'secretfile']) {
-                sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
-                sh 'chmod u+x ./kubectl'  
-                sh './kubectl get nodes'
-                sh './kubectl create -f deployment.yaml'
-                sh './kubectl create -f service.yaml'
-               }
+    stage('Kubectl apply changes') {
+      agent any
+        steps {
+          withKubeConfig([credentialsId: 'secretfile']) {
+            sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+            sh 'chmod u+x ./kubectl'  
+            sh './kubectl get nodes'
+            sh './kubectl apply -f deployment.yaml'
+            sh './kubectl apply -f service.yaml'
           }
+        }
       }
    }
 }
