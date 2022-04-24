@@ -9,7 +9,7 @@ pipeline {
         sh "ls"   
         sh "git clone https://github.com/assistant16/docker-k8s-jenkins.git" 
       }
-    }
+
   //  stage('Build Docker Image') {
    //   steps {
     //    container('docker') {  
@@ -23,7 +23,6 @@ pipeline {
                 sh 'kubectl get nodes'
                }
              }
-           }
-       }
-  }
+      }
+    }
 }
