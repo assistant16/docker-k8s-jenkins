@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: docker-k8s-jenkins
-        image: assistant16/docker-k8s-jenkins:tagname
+        image: assistant16/docker-k8s-jenkins:latest
         resources:
           requests:
             cpu: 100m
